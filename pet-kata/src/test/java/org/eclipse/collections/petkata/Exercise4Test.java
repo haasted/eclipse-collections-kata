@@ -118,12 +118,12 @@ public class Exercise4Test extends PetDomainForKata
 
         MutableBag<PetType> counts = this.people.flatCollect(Person::getPets).collect(Pet::getType).toBag();
 
-        Assert.assertEquals(2L, counts.occurrencesOf(PetType.CAT));
-        Assert.assertEquals(2L, counts.occurrencesOf(PetType.DOG));
-        Assert.assertEquals(2L, counts.occurrencesOf(PetType.HAMSTER));
-        Assert.assertEquals(1L, counts.occurrencesOf(PetType.SNAKE));
-        Assert.assertEquals(1L, counts.occurrencesOf(PetType.TURTLE));
-        Assert.assertEquals(1L, counts.occurrencesOf(PetType.BIRD));
+        Assert.assertEquals(2, counts.occurrencesOf(PetType.CAT));
+        Assert.assertEquals(2, counts.occurrencesOf(PetType.DOG));
+        Assert.assertEquals(2, counts.occurrencesOf(PetType.HAMSTER));
+        Assert.assertEquals(1, counts.occurrencesOf(PetType.SNAKE));
+        Assert.assertEquals(1, counts.occurrencesOf(PetType.TURTLE));
+        Assert.assertEquals(1, counts.occurrencesOf(PetType.BIRD));
     }
 
     /**
