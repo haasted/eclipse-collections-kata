@@ -10,11 +10,19 @@
 
 package org.eclipse.collections.petkata;
 
+import org.eclipse.collections.api.bag.Bag;
+import org.eclipse.collections.api.bag.MutableBag;
 import org.eclipse.collections.api.list.MutableList;
 import org.eclipse.collections.api.map.MutableMap;
+import org.eclipse.collections.api.multimap.bag.MutableBagMultimap;
+import org.eclipse.collections.api.multimap.list.ImmutableListMultimap;
+import org.eclipse.collections.api.multimap.list.MutableListMultimap;
+import org.eclipse.collections.api.multimap.set.MutableSetMultimap;
 import org.eclipse.collections.api.set.MutableSet;
+import org.eclipse.collections.impl.factory.Bags;
 import org.eclipse.collections.impl.factory.Lists;
 import org.eclipse.collections.impl.factory.Maps;
+import org.eclipse.collections.impl.factory.Multimaps;
 import org.eclipse.collections.impl.factory.Sets;
 import org.eclipse.collections.impl.test.Verify;
 import org.junit.Assert;
@@ -27,6 +35,9 @@ public class Exercise3Test extends PetDomainForKata
     {
         MutableList<PetType> petTypes = this.people.flatCollect(Person::getPets).collect(Pet::getType);
         // Try to replace MutableMap<PetType, Integer> with a Bag<PetType>
+        MutableBag<Object> counts = Bags.mutable.empty();
+        petTypes.forEach(counts::add);
+
         MutableMap<PetType, Integer> petTypeCounts = Maps.mutable.empty();
         for (PetType petType : petTypes)
         {
@@ -45,15 +56,13 @@ public class Exercise3Test extends PetDomainForKata
         Assert.assertEquals(Integer.valueOf(1), petTypeCounts.get(PetType.TURTLE));
         Assert.assertEquals(Integer.valueOf(1), petTypeCounts.get(PetType.BIRD));
 
-        Assert.fail("Optimize this test by using a Bag with variable name 'counts'");
-        /*
+//        Assert.fail("Optimize this test by using a Bag with variable name 'counts'");
         Assert.assertEquals(2, counts.occurrencesOf(PetType.CAT));
         Assert.assertEquals(2, counts.occurrencesOf(PetType.DOG));
         Assert.assertEquals(2, counts.occurrencesOf(PetType.HAMSTER));
         Assert.assertEquals(1, counts.occurrencesOf(PetType.SNAKE));
         Assert.assertEquals(1, counts.occurrencesOf(PetType.TURTLE));
         Assert.assertEquals(1, counts.occurrencesOf(PetType.BIRD));
-        */
     }
 
     @Test
@@ -74,10 +83,16 @@ public class Exercise3Test extends PetDomainForKata
             peopleWithLastName.add(person);
         }
         Verify.assertIterableSize(3, lastNamesToPeople.get("Smith"));
-        Assert.fail("Optimize this test by using a Multimap");
 
-        //replace assertion with the below
-        //Verify.assertIterableSize(3, byLastNameMultimap.get("Smith"));
+//        Assert.fail("Optimize this test by using a Multimap");
+
+        MutableBagMultimap<String, Person> byLastNameMultimap = Multimaps.mutable.bag.empty();
+        people.forEach(p -> byLastNameMultimap.put(p.getLastName(), p));
+
+        Verify.assertIterableSize(3, byLastNameMultimap.get("Smith"));
+
+        ImmutableListMultimap<String, Person> groupByResult = people.groupBy(Person::getLastName).toImmutable();
+        Verify.assertIterableSize(3, groupByResult.get("Smith"));
     }
 
     @Test
@@ -109,6 +124,15 @@ public class Exercise3Test extends PetDomainForKata
         Verify.assertIterableSize(1, peopleByPetType.get(PetType.BIRD));
         Verify.assertIterableSize(1, peopleByPetType.get(PetType.SNAKE));
 
-        Assert.fail("Optimize this test by using a Multimap");
+//        Assert.fail("Optimize this test by using a Multimap");
+        MutableSetMultimap<PetType, Person> peopleByPetType2 = Multimaps.mutable.set.empty();
+        this.people.groupByEach(Person::getPetTypes, peopleByPetType2);
+        
+        Verify.assertIterableSize(2, peopleByPetType2.get(PetType.CAT));
+        Verify.assertIterableSize(2, peopleByPetType2.get(PetType.DOG));
+        Verify.assertIterableSize(1, peopleByPetType2.get(PetType.HAMSTER));
+        Verify.assertIterableSize(1, peopleByPetType2.get(PetType.TURTLE));
+        Verify.assertIterableSize(1, peopleByPetType2.get(PetType.BIRD));
+        Verify.assertIterableSize(1, peopleByPetType2.get(PetType.SNAKE));
     }
 }
