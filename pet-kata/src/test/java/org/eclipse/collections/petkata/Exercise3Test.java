@@ -127,7 +127,7 @@ public class Exercise3Test extends PetDomainForKata
 //        Assert.fail("Optimize this test by using a Multimap");
         MutableSetMultimap<PetType, Person> peopleByPetType2 = Multimaps.mutable.set.empty();
         this.people.groupByEach(Person::getPetTypes, peopleByPetType2);
-        
+
         Verify.assertIterableSize(2, peopleByPetType2.get(PetType.CAT));
         Verify.assertIterableSize(2, peopleByPetType2.get(PetType.DOG));
         Verify.assertIterableSize(1, peopleByPetType2.get(PetType.HAMSTER));
