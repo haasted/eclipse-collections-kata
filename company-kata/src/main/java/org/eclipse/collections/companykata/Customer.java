@@ -24,12 +24,9 @@ import java.util.List;
  */
 public class Customer
 {
-    public static final Function<Customer, String> TO_NAME = customer -> {
-        Assert.fail("Replace with the implementation of the Function.");
-        return null;
-    };
+    public static final Function<Customer, String> TO_NAME = Customer::getName;
 
-    public static final Function<Customer, String> TO_CITY = null;
+    public static final Function<Customer, String> TO_CITY = Customer::getCity;
 
     public static final Function<Customer, Double> TO_TOTAL_ORDER_VALUE = Customer::getTotalOrderValue;
 
