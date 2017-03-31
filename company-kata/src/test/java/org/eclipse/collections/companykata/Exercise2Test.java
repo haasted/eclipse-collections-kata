@@ -23,7 +23,7 @@ public class Exercise2Test extends CompanyDomainForKata
     /**
      * Set up a {@link Predicate} that tests to see if a {@link Customer}'s city is "London"
      */
-    private static final Predicate<Customer> CUSTOMER_FROM_LONDON = Predicates.attributeEqual(Customer::getCity, "London");
+    public static final Predicate<Customer> CUSTOMER_FROM_LONDON = Predicates.attributeEqual(Customer::getCity, "London");
 
     @Test
     public void customerFromLondonPredicate()
