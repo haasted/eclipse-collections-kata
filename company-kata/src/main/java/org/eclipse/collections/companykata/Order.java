@@ -11,8 +11,13 @@
 package org.eclipse.collections.companykata;
 
 import org.eclipse.collections.api.block.function.Function;
+import org.eclipse.collections.api.list.ListIterable;
 import org.eclipse.collections.impl.block.function.AddFunction;
 import org.eclipse.collections.impl.collection.mutable.CollectionAdapter;
+import org.eclipse.collections.impl.factory.Iterables;
+import org.eclipse.collections.impl.factory.Lists;
+import org.eclipse.collections.impl.list.mutable.FastList;
+import org.eclipse.collections.impl.utility.ArrayIterate;
 import org.eclipse.collections.impl.utility.Iterate;
 
 import java.util.ArrayList;
@@ -59,6 +64,11 @@ public class Order
     public void addLineItem(LineItem aLineItem)
     {
         this.lineItems.add(aLineItem);
+    }
+
+    public void addLineItems(int count, LineItem aLineItem)
+    {
+        this.lineItems.addAll(FastList.newWithNValues(count, () -> aLineItem));
     }
 
     public List<LineItem> getLineItems()
