@@ -69,6 +69,7 @@ public class Order
     public void addLineItems(int count, LineItem aLineItem)
     {
         this.lineItems.addAll(FastList.newWithNValues(count, () -> aLineItem));
+//        this.lineItems.addAll(java.util.Collections.nCopies(count, aLineItem)); // Might actually be more efficient without the factory lambda.
     }
 
     public List<LineItem> getLineItems()
